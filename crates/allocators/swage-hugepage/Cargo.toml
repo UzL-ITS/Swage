@@ -1,0 +1,22 @@
+[package]
+name = "swage-hugepage"
+version = "0.2.0"
+edition = "2024"
+description = "Hugepage allocator module for Swage."
+repository = "https://github.com/UzL-ITS/swage"
+license = "MIT"
+keywords = ["rowhammer", "security", "memory", "hardware", "attack"]
+categories = ["security"]
+
+[package.metadata.docs.rs]
+all-features = false
+default-target = "x86_64-unknown-linux-gnu"
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+lazy_static = "1.5"
+libc = { workspace = true }
+log = { workspace = true }
+rand = { workspace = true }
+
+swage-core = { workspace = true }

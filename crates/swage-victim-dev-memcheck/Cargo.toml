@@ -1,0 +1,22 @@
+[package]
+name = "swage-victim-dev-memcheck"
+version = "0.2.0"
+edition = "2024"
+description = "DevMemCheck victim module for Swage."
+repository = "https://github.com/UzL-ITS/swage"
+license = "MIT"
+keywords = ["rowhammer", "security", "memory", "hardware", "attack"]
+categories = ["security"]
+
+[package.metadata.docs.rs]
+all-features = true
+default-target = "x86_64-unknown-linux-gnu"
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+log = "0.4.0"
+libc = "0.2.155"
+serde = { version = "1.0", features = ["derive"] }
+
+swage-core = { workspace = true }
+thiserror = "2.0.16"

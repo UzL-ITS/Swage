@@ -1,0 +1,79 @@
+[workspace]
+members = [ "crates/allocators/*", "crates/swage-core", "crates/swage-victim-dev-memcheck" ]
+
+[package]
+name = "swage"
+version = "0.2.0"
+edition = "2024"
+description = "The Swage Rowhammer framework."
+repository = "https://github.com/UzL-ITS/swage"
+license = "MIT"
+readme = "README.md"
+
+[package.metadata.docs.rs]
+all-features = true
+
+[workspace.dependencies]
+swage-core = { version = "0.2", path = "crates/swage-core" }
+
+# core allocators
+swage-coco = { version = "0.2", path = "crates/allocators/swage-coco" }
+swage-hugepage = { version = "0.2", path = "crates/allocators/swage-hugepage" }
+swage-pfn = { version = "0.2", path = "crates/allocators/swage-pfn" }
+swage-spoiler = { version = "0.2", path = "crates/allocators/swage-spoiler" }
+swage-thp = { version = "0.2", path = "crates/allocators/swage-thp" }
+
+# core hammerers
+swage-blacksmith = { version = "0.2", path = "crates/hammerers/swage-blacksmith" }
+swage-dev-mem = { version = "0.2", path = "crates/hammerers/swage-dev-mem" }
+swage-dummy = { version = "0.2", path = "crates/hammerers/swage-dummy" }
+
+# core victims
+swage-victim-dev-memcheck = { version = "0.2", path = "crates/swage-victim-dev-memcheck" }
+
+# shared dependencies
+indicatif = "0.18"
+itertools = "0.14"
+libc = "0.2"
+log = "0.4"
+rand = "0.9.2"
+serde = "1.0"
+serde_json = "1.0"
+thiserror = "2.0"
+
+[dependencies]
+swage-core = { workspace = true }
+
+# core allocators
+swage-coco = { workspace = true, optional = true }
+swage-hugepage = { workspace = true, optional = true }
+swage-pfn = { workspace = true, optional = true }
+swage-spoiler = { workspace = true, optional = true }
+swage-thp = { workspace = true, optional = true }
+
+# core hammerers
+swage-blacksmith = { workspace = true, optional = true }
+swage-dev-mem = { workspace = true, optional = true }
+swage-dummy = { workspace = true, optional = true }
+
+# core victims
+swage-victim-dev-memcheck = { workspace = true, optional = true }
+
+[features]
+default = []
+coco = ["swage-coco"]
+hugepage = ["swage-hugepage"]
+pfn = ["swage-pfn"]
+spoiler = ["swage-spoiler"]
+thp = ["swage-thp"]
+blacksmith = ["swage-blacksmith"]
+dev-mem = ["swage-dev-mem"]
+dummy = ["swage-dummy"]
+dev-memcheck = ["swage-victim-dev-memcheck"]
+
+[dev-dependencies]
+anyhow = "1.0"
+rand = { workspace = true }
+swage-hugepage = { path = "crates/allocators/swage-hugepage" }
+swage-blacksmith = { path = "crates/hammerers/swage-blacksmith" }
+env_logger = "0.11.8"

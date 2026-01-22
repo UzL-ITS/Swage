@@ -1,0 +1,32 @@
+[package]
+name = "swage-spoiler"
+version = "0.2.0"
+edition = "2024"
+description = "SPOILER allocator module for Swage."
+repository = "https://github.com/UzL-ITS/swage"
+license = "MIT"
+keywords = ["rowhammer", "security", "memory", "hardware", "attack"]
+categories = ["security"]
+
+[package.metadata.docs.rs]
+all-features = true
+default-target = "x86_64-unknown-linux-gnu"
+targets = ["x86_64-unknown-linux-gnu"]
+
+[features]
+spoiler_dump = []
+
+[dependencies]
+indicatif = { workspace = true }
+itertools = { workspace = true }
+libc = { workspace = true }
+log = { workspace = true }
+
+swage-core = { workspace = true }
+thiserror = { workspace = true }
+
+[build-dependencies]
+cc = "1.0"
+
+[build-dependencies.bindgen]
+version = "0.72.1"

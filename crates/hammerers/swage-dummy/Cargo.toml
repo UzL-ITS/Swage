@@ -1,0 +1,20 @@
+[package]
+name = "swage-dummy"
+version = "0.2.0"
+edition = "2024"
+description = "Dummy hammerer module for Swage."
+repository = "https://github.com/UzL-ITS/swage"
+license = "MIT"
+keywords = ["rowhammer", "security", "memory", "hardware", "attack"]
+categories = ["security"]
+
+[package.metadata.docs.rs]
+all-features = true
+default-target = "x86_64-unknown-linux-gnu"
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+log = "0.4.0"
+
+swage-core = { workspace = true }
+thiserror = "2.0.16"
