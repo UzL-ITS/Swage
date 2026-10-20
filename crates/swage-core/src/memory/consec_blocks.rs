@@ -63,17 +63,55 @@ impl GetConsecPfns for ConsecBlocks {
     fn consec_pfns(&self) -> Result<Vec<Range<PhysAddr>>, crate::memory::memblock::Error> {
         let mut pfns = vec![];
         for block in &self.blocks {
-            let mut block_pfns = VecDeque::from(block.consec_pfns()?);
-            let is_cons = pfns
-                .last()
-                .is_some_and(|last: &Range<PhysAddr>| last.start == block_pfns[0].end);
-            if is_cons {
-                let prev = pfns.pop();
-                let next = block_pfns.pop_front();
-                pfns.push(prev.unwrap().start..next.unwrap().end);
-            }
-            pfns.extend(block_pfns);
+            merge_pfns(&mut pfns, block.consec_pfns()?);
         }
         Ok(pfns)
+    }
+}
+
+/// Appends `block_pfns` to `pfns`, merging the first range of `block_pfns` into the
+/// last range of `pfns` if it continues it physically.
+fn merge_pfns(pfns: &mut Vec<Range<PhysAddr>>, block_pfns: Vec<Range<PhysAddr>>) {
+    let mut block_pfns = VecDeque::from(block_pfns);
+    let is_cons = pfns
+        .last()
+        .zip(block_pfns.front())
+        .is_some_and(|(last, next)| last.end == next.start);
+    if is_cons {
+        let prev = pfns.pop().unwrap();
+        let next = block_pfns.pop_front().unwrap();
+        pfns.push(prev.start..next.end);
+    }
+    pfns.extend(block_pfns);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const MB4: usize = 0x400000;
+
+    fn r(start: usize) -> Range<PhysAddr> {
+        PhysAddr::new(start)..PhysAddr::new(start + MB4)
+    }
+
+    #[test]
+    fn merges_ascending_adjacent_blocks() {
+        let mut pfns = vec![];
+        merge_pfns(&mut pfns, vec![r(0x2fe800000)]);
+        merge_pfns(&mut pfns, vec![r(0x2fec00000)]);
+        assert_eq!(
+            pfns,
+            vec![PhysAddr::new(0x2fe800000)..PhysAddr::new(0x2ff000000)]
+        );
+    }
+
+    #[test]
+    fn keeps_descending_adjacent_blocks_separate() {
+        // previously merged into the empty range 0x2fec00000..0x2fec00000
+        let mut pfns = vec![];
+        merge_pfns(&mut pfns, vec![r(0x2fec00000)]);
+        merge_pfns(&mut pfns, vec![r(0x2fe800000)]);
+        assert_eq!(pfns, vec![r(0x2fec00000), r(0x2fe800000)]);
     }
 }
