@@ -217,6 +217,7 @@ impl<PH: Hammering, H: Hammering, AE: std::error::Error, VE: std::error::Error>
         let mut victim = match (self.victim_factory)(memory.clone(), profiling.clone()) {
             Ok(v) => v,
             Err(e) => {
+                warn!("Failed to create victim: {:?}", e);
                 return ExperimentData::new(
                     vec![Err(HammerError::VictimFailed(e))],
                     profiling,
