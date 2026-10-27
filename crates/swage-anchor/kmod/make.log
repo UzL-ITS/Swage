@@ -1,0 +1,61 @@
+make -C /lib/modules/6.8.12-mem-nostrict-32abbd4f3ada/build M=/home/jb/leaky_vllm/swage/crates/swage-anchor/kmod modules
+make[1]: Entering directory '/usr/src/linux-headers-6.8.12-mem-nostrict-32abbd4f3ada'
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+  You are using:           gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+  CC [M]  /home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.o
+In file included from ./include/asm-generic/bug.h:22,
+                 from ./arch/x86/include/asm/bug.h:87,
+                 from ./include/linux/bug.h:5,
+                 from ./arch/x86/include/asm/paravirt.h:19,
+                 from ./arch/x86/include/asm/cpuid.h:62,
+                 from ./arch/x86/include/asm/processor.h:19,
+                 from ./arch/x86/include/asm/timex.h:5,
+                 from ./include/linux/timex.h:67,
+                 from ./include/linux/time32.h:13,
+                 from ./include/linux/time.h:60,
+                 from ./include/linux/stat.h:19,
+                 from ./include/linux/module.h:13,
+                 from /home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.c:61:
+/home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.c: In function ‘anchor_exit’:
+./include/linux/kern_levels.h:5:25: warning: format ‘%llx’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+    5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
+      |                         ^~~~~~
+./include/linux/printk.h:429:25: note: in definition of macro ‘printk_index_wrap’
+  429 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
+      |                         ^~~~
+./include/linux/printk.h:530:9: note: in expansion of macro ‘printk’
+  530 |         printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
+      |         ^~~~~~
+./include/linux/kern_levels.h:14:25: note: in expansion of macro ‘KERN_SOH’
+   14 | #define KERN_INFO       KERN_SOH "6"    /* informational */
+      |                         ^~~~~~~~
+./include/linux/printk.h:530:16: note: in expansion of macro ‘KERN_INFO’
+  530 |         printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
+      |                ^~~~~~~~~
+/home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.c:755:25: note: in expansion of macro ‘pr_info’
+  755 |                         pr_info("exit-restore: pid %llu va %llx back to pfn %05lx\n",
+      |                         ^~~~~~~
+./include/linux/kern_levels.h:5:25: warning: format ‘%llx’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long unsigned int’ [-Wformat=]
+    5 | #define KERN_SOH        "\001"          /* ASCII Start Of Header */
+      |                         ^~~~~~
+./include/linux/printk.h:429:25: note: in definition of macro ‘printk_index_wrap’
+  429 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
+      |                         ^~~~
+./include/linux/printk.h:500:9: note: in expansion of macro ‘printk’
+  500 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
+      |         ^~~~~~
+./include/linux/kern_levels.h:11:25: note: in expansion of macro ‘KERN_SOH’
+   11 | #define KERN_ERR        KERN_SOH "3"    /* error conditions */
+      |                         ^~~~~~~~
+./include/linux/printk.h:500:16: note: in expansion of macro ‘KERN_ERR’
+  500 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
+      |                ^~~~~~~~
+/home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.c:758:25: note: in expansion of macro ‘pr_err’
+  758 |                         pr_err("exit-restore: (pid %llu, %llx) unmapped or changed under the transplant - leaving it\n",
+      |                         ^~~~~~
+  MODPOST /home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/Module.symvers
+  CC [M]  /home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.mod.o
+  LD [M]  /home/jb/leaky_vllm/swage/crates/swage-anchor/kmod/anchor.ko
+make[1]: Leaving directory '/usr/src/linux-headers-6.8.12-mem-nostrict-32abbd4f3ada'
+insmod anchor.ko

@@ -222,6 +222,7 @@ Enable specific non-core modules via Cargo features:
 - `thp` - Transparent Huge Pages allocator
 - `blacksmith` - Blacksmith hammerer
 - `dev-mem` - /dev/mem hammerer
+- `anchor` - /dev/anchor deterministic page-anchoring facility (requires the companion kernel module)
 
 ### Safety and Ethics
 

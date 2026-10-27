@@ -259,6 +259,17 @@ pub mod dev_mem {
     pub use swage_dev_mem::*;
 }
 
+/// Deterministic page anchoring: the `/dev/anchor` kernel-module
+/// facility (see `crates/swage-anchor/kmod`). Pins an attacker-owned
+/// physical frame and transplants it under a victim page-table entry,
+/// making Rowhammer placement deterministic without touching the
+/// victim's code — the placement variance drops out of the experiment
+/// and the hammering itself becomes the only variable.
+#[cfg(feature = "anchor")]
+pub mod anchor {
+    pub use swage_anchor::*;
+}
+
 /// Prelude module for convenient imports.
 ///
 /// This module re-exports commonly used types and traits, allowing users to import

@@ -1355,6 +1355,7 @@ dependencies = [
  "anyhow",
  "env_logger",
  "rand 0.9.2",
+ "swage-anchor",
  "swage-blacksmith",
  "swage-coco",
  "swage-core",
@@ -1365,6 +1366,17 @@ dependencies = [
  "swage-spoiler",
  "swage-thp",
  "swage-victim-dev-memcheck",
+]
+
+[[package]]
+name = "swage-anchor"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "libc 0.2.180",
+ "log",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
